@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import nextCookie from "next-cookies";
 import Layout from "../components/layout";
 import { withAuthSync } from "../utils/auth";
 import getHost from "../utils/get-host";
+import { useSnackbar } from "notistack";
 
 const Profile = props => {
   const { fullName, email, userId, userPictureUrl } = props.data;
+  const { closeSnackbar } = useSnackbar();
 
+  useEffect(() => {
+    closeSnackbar();
+  }, []);
+  
   return (
     <Layout>
       <img src={userPictureUrl} alt="Avatar" />

@@ -21,17 +21,17 @@ function Login() {
   useEffect(() => {
     // Set cookies if params are present
     if (paramsToken && paramsEmail) {
-      showSnackbarLogin({
-        onClose: () => login({ token: paramsToken, loginName: paramsEmail})
-      });
+      showSnackbarLogin();
     };
   }, [paramsToken, paramsEmail]);
 
-  const showSnackbarLogin = ({ onClose }) => {
+  const showSnackbarLogin = () => {
     enqueueSnackbar('Logging you in...', {
       variant: 'info',
-      autoHideDuration: 60000,
-      onClose: () => onClose?.(),
+      autoHideDuration: 5000,
+      onClose: () => {
+        if(paramsToken && paramsEmail) login({ token: paramsToken, loginName: paramsEmail})
+      },
       anchorOrigin: { vertical: 'top', horizontal: 'center'}
     });
   }
@@ -54,7 +54,8 @@ function Login() {
       })
       if (response.status === 200) {
         const { token } = await response.json()
-        await login({ token, loginName })
+        await login({ token, loginName });
+        closeSnackbar();
       } else {
         closeSnackbar();
         // https://github.com/developit/unfetch#caveats

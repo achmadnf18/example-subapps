@@ -29,7 +29,7 @@ export const logout = () => {
   cookie.remove('token')
   // to support logging out from all windows
   window.localStorage.setItem('logout', Date.now())
-  Router.push('/login')
+  window.location.href = 'https://stmdbm7webdev.z23.web.core.windows.net/logout'
 }
 
 export const withAuthSync = WrappedComponent => {
