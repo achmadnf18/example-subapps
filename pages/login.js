@@ -28,7 +28,7 @@ function Login() {
   const showSnackbarLogin = () => {
     enqueueSnackbar('Logging you in...', {
       variant: 'info',
-      autoHideDuration: 5000,
+      autoHideDuration: 30000,
       onClose: () => {
         if(paramsToken && paramsEmail) login({ token: paramsToken, loginName: paramsEmail})
       },
