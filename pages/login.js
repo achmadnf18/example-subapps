@@ -21,18 +21,25 @@ function Login() {
   useEffect(() => {
     // Set cookies if params are present
     if (paramsToken && paramsEmail) {
-      enqueueSnackbar('Logging you in...', {
-        variant: 'info',
-        autoHideDuration: 3000,
-        onClose: () => login({ token: paramsToken, loginName: paramsEmail}),
-        anchorOrigin: { vertical: 'top', horizontal: 'center'}
+      showSnackbarLogin({
+        onClose: () => login({ token: paramsToken, loginName: paramsEmail})
       });
     };
-  }, [paramsToken, paramsEmail])
+  }, [paramsToken, paramsEmail]);
+
+  const showSnackbarLogin = ({ onClose }) => {
+    enqueueSnackbar('Logging you in...', {
+      variant: 'info',
+      autoHideDuration: 60000,
+      onClose,
+      anchorOrigin: { vertical: 'top', horizontal: 'center'}
+    });
+  }
 
   async function handleSubmit(event) {
     event.preventDefault()
     setUserData(Object.assign({}, userData, { error: '' }))
+    showSnackbarLogin();
 
     const loginName = userData.loginName
     const password = userData.password
@@ -49,7 +56,7 @@ function Login() {
         const { token } = await response.json()
         await login({ token, loginName })
       } else {
-        console.log('Login failed.')
+        closeSnackbar();
         // https://github.com/developit/unfetch#caveats
         let error = new Error(response.statusText)
         error.response = response
