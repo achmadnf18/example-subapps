@@ -31,7 +31,7 @@ function Login() {
     enqueueSnackbar('Logging you in...', {
       variant: 'info',
       autoHideDuration: 60000,
-      onClose,
+      onClose: () => onClose?.(),
       anchorOrigin: { vertical: 'top', horizontal: 'center'}
     });
   }
